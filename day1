@@ -1,0 +1,12 @@
+M-x eval-buffer
+M-x load-file
+C-x C-e
+
+company
+
+C-h m: Mode
+
+Major mode | Minor mode
+
+.org's major mode is Org Mode.
+

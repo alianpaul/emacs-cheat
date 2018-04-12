@@ -1,0 +1,53 @@
+* Outliner
+** H 0
+** H 1
+*** H 1 0
+    XXXXXXXXXXXXXXX
+    XXXXXXXXXXXXXXX
+*** H 1 1
+    YYYYYYYYYYYYYYY
+    YYYYYYYYYYYYYYY
+*** H 1 2
+
+M-<up>,M-<down> Move the contents' position of the same level.
+
+* Markup
+
+*Bold*, /italic/, =verbati=, +strikethrough+
+
+** Link
+C-c C-l Create a link, C-c C-o Open a link
+[[https://orgmode.org/][orgmode]]
+Links to files, emails, to-dos.
+
+** Table
+| Some | Data        |
+|------+-------------|
+|    1 | XXXXXXXXX   |
+|    2 | YYYYYYYYYYY |
+
+** Output to other formats
+C-c C-e
+
+** Source code
+<s <Tab>
+#+BEGIN_SRC python
+
+#+END_SRC
+
+* LaTex integration
+- Characters: \alpha \rightarrow \beta
+- $(n \log n)$
+
+\begin{align*}
+\end{align*}
+
+* Literate programming
+  Extract code out of .org file and execute linearly
+
+* Todo stuff
+C-c C-t 
+s-<up> Adjust dates.
+** DONE YYY
+** DONE XXX
+** DONE XXX

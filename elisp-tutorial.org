@@ -1,0 +1,362 @@
+* Preface
+Emacs as a lisp programming environment.
+nElisp is simpler than common lisp.  'cl.el' adds common lisp features to elisp.
+The command is invoked customarily by 'key'.
+Prefix key: universal argument 'C-u'.
+'M-C-\': Indent region.
+
+Lisp's expression is lists and single atoms.^
+
+* List Processing
+Lists are basis of Lisp.
+** Lisp Lists
+'(rose violet daisy buttercup)
+
+*** Numbers Lists
+In Lisp, both data and programs are represented the same way; that is,
+they are both lists of words, numbers, or other lists.
+
+*** Lisp Atoms
+()                   Empty list, a atom and a list at the same time
+symbolic expression  Printed representation of both atoms and lists.
+
+The atoms of a list are unsplittable.
+
+Atom kinds, "numbers" "symbols" "strings" 
+
+*** Whitespace in Lists
+*** Typing Lists
+
+** Run a Program
+A list in Lisp is a program ready to run.
+When we evaluate a list, computer will do 3 things:
+1. do nothing and return the list itself.
+2. error message
+3. treat the first symbol as a command and do sth
+
+' quote: Do nothing with the list, take it as it is written.
+
+interpreter: come up with the meaning of an expression
+
+C-x C-e
+
+** Making Errors
+GNU Emacs debugger. Debugger generates the error messages.
+
+     ---------- Buffer: *Backtrace* ----------
+     Debugger entered--Lisp error: (void-function this)
+       (this is an unquoted list)
+       eval((this is an unquoted list))
+       eval-last-sexp-1(nil)
+       eval-last-sexp(nil)
+       call-interactively(eval-last-sexp)
+     ---------- Buffer: *Backtrace* ----------
+
+eval-last-sexp: printed representation.
+
+(void-function this): When a symbol does not have a definition
+attached to it, the place that should contain the instructions is
+void.
+
+Symbol tells computer where to find the instructions.
+
+** Names & Definitions
+A symbol itself is not the set of instructions the computer to carry
+out. It is used as a way to locating the definition or set of
+instructions.
+
+In lisp, a set of instructions can be attached to several names.
+
+** Lisp Interperter
+*** Complications
+- First complication:: Evaluate a symbol that is not quoted and does
+  not have parentheses around it.  Interpreter determines the symbol's
+  value as a "variable".
+
+- Second complication:: 
+Special Forms: 
+
+Macros: translates a lisp expression into another expression that is
+to be evaluated in place of the original expresion.
+
+- Final complication: Not special form, and if it is part of a list.
+
+*** Byte Compiling
+List interpreter interprets 2 kinds of entity: humanly readable code,
+and byte code.
+
+** Evaluation
+After evaluates an expression, interpreter returns a value. Actions
+like printing are side effects to lisp interpreter when it returns
+value.
+
+C-x C-e: eval-last-sexp
+
+** Variables
+symbol->function definition.
+symbol->value, the value can vary, so the symbol is also called variable.
+
+A symbol, chest of drawers, can have both a function definition and a
+value attached to it
+
+The value returned as a variable is printed in exactly the same way as
+the value returned by a function carrying out instrunctions.  From the
+Lisp interpreter point of view, a value returned is a value returned.
+What kind of expression it came from cease to matter when the value is
+known(whether the value come from a variable or function).
+
+(symbol): use symbol as function, eval the function. return value by
+ carrying out instructions
+
+ symbol : use symbol as variable, return the corresponding value.
+
+(+)
+evaluate the above symbol expression, find the function
+definiation(instructions), carrying out instructions, return value.
+
++
+evaluate the above symbol, it is a variable, find corresponding value
+and return.
+(setq + 2)
++
+(+ 1 3)
+
+** Arguments
+The valnues returned by the evaluation of the atoms or lists are passed
+to the function.
+
+Data type of arguments depends on the operation of the function.
+(concat "The " (number-to-string (+ 2 fill-column)) " red foxes.")
+
++ * any number of arguments.
+
+number-or-marker-p: p predicate, determine whether some property is true or false.
+zerop
+(zerop 0)
+listp
+(listp '(+ 1 2 4))
+
+(message "Faggot")
+What we see is the value returned by the message function.
+
+(buffer-name)
+fill-column
+
+String between double quotes evaluates to itself, like a number.
+
+** set & setq
+set, setq, let: set the value of a variable.
+
+(set 'flower '(rose violet daisy buttercup))
+set return the 2nd argument, binding the value with the symbol is the
+side effect of set.
+
+'flower
+flower
+
+The argument without quote will be evaluated.  The first argument will
+always be quoted, so we have a special form setq.  setq also can set
+multiple symbols value.
+
+(setq counter 0)
+(setq counter (+ counter 1)) incrementer.
+
+counter
+
+** Summary
+* Practicing Evaluation
+Whenever you give an editing command to emacs Lisp, you are evaluating
+an expression.
+
+** Buffer Names
+(buffer-file-name)
+(buffer-name)
+
+buffer is "visiting" that file.
+
+nil: false, nothing, empty list.
+
+** Getting Buffers
+(current-buffer)  echo area: #<buffer elisp-tutorial.org>
+return the buffer itself
+   
+(other-buffer)
+MRU buffer
+
+** Switching Buffers
+(switch-to-buffer (other-buffer)) 
+C-x b 
+2 switches: It switches the
+buffer to which Emacs's attention is directed; and it switches the
+buffer displayed in the window.
+
+(set-buffer)
+buffer on the screen unchanged.
+
+(buffer-size)
+(point)
+(point-min)
+(point-max)
+* Writing Defuns
+All functions are defined in terms of other functions, except for a
+few primitive functions that are written in C programming language.
+
+** The defun Macro
+     (defun FUNCTION-NAME (ARGUMENTS...)
+       "OPTIONAL-DOCUMENTATION..."
+       (interactive ARGUMENT-PASSING-INFO)     ; optional
+       BODY...)
+C-h f: returns the documentation strings
+
+** Install a Function Definition
+defun returns function name, its side effect is installing the function definition.
+
+- The effect of installation
+
+change the function definition by re-eval it's defun.(reinstall the function)
+
+** Make a function interactive
+A user can invoke interactive functin by M-x function name or C-key.
+
+The function argument is passed by C-u num.
+C-u num M-x function
+C-u num C-key
+
+     (defun multiply-by-seven (number)       ; Interactive version.
+       "Multiply NUMBER by seven."
+       (interactive "p")
+       (message "The result is %d" (* 7 number)))
+
+"p" : prefix arguments
+
+(interactive "p\ncZap to char: ")
+Code Characters for interactive.
+
+** Install Code Permanently
+1. .emacs
+2. use load function to install the functions defined in the file.
+3. site-init.el
+
+** 'let'
+Prevent confusion: 'let' creates a name for local variable that
+overshadows any use of the same name outside the 'let' expression.
+Local variables created by 'let' retain their value only within the
+'let' expression itself.  The created local variable have no effect
+outside the 'let' expression.
+
+In elisp, scoping is dynamic, not lexical.
+
+returns the value of the last expression in the body as the value of the whole expression.
+#+BEGIN_SRC emacs-lisp
+  (let ((VARIABLE VALUE)
+        (VARIABLE VALUE)
+        ...)
+    BODY...)
+#+END_SRC
+
+#+BEGIN_SRC emacs-lisp
+  (let ((birch 3)
+        pine
+        fir
+        (oak 'some))
+    (message
+     "Here are %d variables with %s, %s, and %s value."
+     birch pine fir oak))
+#+END_SRC
+
+** 'if'
+#+BEGIN_SRC emacs-lisp
+  (if TRUE-OR-FALSE-TEST
+      ACTION-TO-CARRY-OUT-IF-TEST-IS-TRUE)
+#+END_SRC
+
+(equal symbol "fierce")
+
+Otherwise 'nil' will be returned for this expression.
+
+** 'if-then-else'
+#+BEGIN_SRC emacs-lisp
+  (if TRUE-OR-FALSE-TEST
+      ACTION-TO-CARRY-OUT-IF-THE-TEST-RETURNS-TRUE
+    ACTION-TO-CARRY-OUT-IF-THE-TEST-RETURNS-FALSE)
+#+END_SRC
+
+
+** Truth & False
+false: nil, empty list
+true: Anything else false
+
+(equal () nil)
+t
+
+** 'save-excursion'
+Special form.
+
+Saves the location of point, executes the body of function, restores
+the point.
+
+The part of the buffer between point and mark is called the "region".
+
+Also keeps track of the current buffer.
+
+#+BEGIN_SRC emacs-lisp
+  (save-excursion
+    FIRST-EXPRESSION-IN-BODY
+    SECOND-EXPRESSION-IN-BODY
+    THIRD-EXPRESSION-IN-BODY
+    ...
+    LAST-EXPRESSION-IN-BODY)
+#+END_SRC
+
+** Review
+'=' numbers
+'equal' : 2 objects have the similar structure and contents.
+'eq': 2 symbol bind to the same object.
+
+(= 1 1)
+(= "h" "h") wrong type of argument.
+
+'string<'
+'string-lessp'
+
+'string='
+'string-equal'
+* A few buffer related functions
+describe-function, tell the location of the function
+
+xref-find-definitions: see a function in its original source file.
+Also works with C and non-programming text.
+M-.
+
+C-x b: back to previous buffer.
+
+(point-min)
+
+(push-mark): cache current curosr point into the mark ring.
+
+C-x C-x: go back and mark
+
+C-h f: describe function. can automatically offer you the symbol preceding the cursor.
+
+#+BEGIN_SRC emacs-lisp
+  (defun point-to-begin ()
+    "point the cursor to the beginning of the buffer"
+    (interactive)
+    (push-mark (point) nil t)
+    (goto-char (point-min)))
+#+END_SRC
+
+(let()
+(push-mark (point-max) nil t)
+(goto-char (point-min)))
+
+region: part of the buffer between point and mark.
+
+(push-mark)
+(push-mark)
+(push-mark)
+
+C-u C-<SPC>: pop the previous mark
+
+** 'append-to-buffer'
+

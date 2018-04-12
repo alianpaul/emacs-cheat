@@ -1,0 +1,93 @@
+* Document Structure
+** Outlines
+show/hide functionality of outlines, <TAB> org-cycle
+** Headlines
+*org-footnote-section*, which default to 'Footnotes', is considered as
+ special.  A subtree with this headline will be ignored by exporting functions.
+** Visibility cycling
+<TAB> subtree cycling.
+S-<TAB> global cycling.
+** Motion
+Motion between different level of headlines.
+C-c C-n
+      p
+      f
+      b
+      u
+** Structure editing
+M-<RET>        new heading same with current level.
+M-S-<RET>      new TODO heading
+M-left/right   promote/demote current heading
+M-S-left/right promote/demote current subtree
+M-S-up/down    swap with adjcent subtree
+C-c C-w        *refile entry or region to a different location*
+C-x n s/w      Narrow buffer to current subtree/widen it again
+** Sparse trees
+Construct sparse trees for selected informationin an outline tree.
+C-c / Prompts for an extra key to select a sparse-tree creating
+command.  The creating commands select information in different way.
+** Plain lists
+List provide additional structure.
+Unordered list: - + *
+Ordered list: 1. 1)
+Description list: ::
+e.g:
+ My favorite scenes are (in this order)
+   1. The attack of the Rohirrim
+   2. Eowyn's fight with the witch king
+      + this was already my favorite scene in the book
+      + I really like Miranda Otto.
+   Important actors in this film are:
+   - Elijah Wood :: He plays Frodo
+   - Sean Astin :: He plays Sam, Frodo's friend.
+   - [X] Faggort :: He plays himself
+
+<TAB>          Items can be folded just like headlines
+M-RET          new item
+M-S-RET        new item with check box,C-c C-c to toggle.
+M-left/right
+M-S-left/right
+M-S-up/down    Share the same structure editing
+** Footnotes
+C-c C-x f    Create footnote
+C-c C-c      Jump between definition and reference
+* Tables
+* Markup for rich export
+** Literal examples
+C-c '    Enter and leave the editing buffer.
+
+#+BEGIN_SRC python
+  def faggot:
+      print "Hello, Faggot"
+#+END_SRC
+** Include files
+** Embedded LaTeX
+Angles are written as Greek letters \alpha, \beta and \gamma.  The mass if
+the sun is M_sun = 1.989 x 10^30 kg.  The radius of the sun is R_{sun} =
+6.96 x 10^8 m.  If $a^2=b$ and $b=2$, then the solution must be either
+$a=+\sqrt{2}$ or $a=-\sqrt{2}$.
+
+\begin{equation}
+x=\sqrt{b}
+\end{equation}
+
+
+* Exporting
+** Export options
+The exporter recognizes special lines in the buffer which provide
+additional information.
+
+#+TITLE: Org Mode Tutorial
+#+AUTHOR: Alianpaul
+#+DATE:
+** The export dispatcher
+C-c C-e
+** ASCII/UTF-8 export
+C-c C-e t u
+** HTML export
+C-c C-e h h
+Export as HTML file myfile.html.
+
+C-c C-e h o
+Export as HTML file and immediately open it with a browser.
+

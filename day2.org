@@ -1,0 +1,28 @@
+setq | setq-default
+
+#+BEGIN_SRC emacs-lisp
+  (setq make-backup-files nil)
+#+END_SRC
+
+C-c '    run literate program
+
+recent file
+
+()
+
+current line
+
+M-x package-list-packages
+M-x package-autoremove
+
+
+smex C-s/C-r <Enter>
+swiper
+
+;;Graphic view to customize
+M-x customize-group
+
+
+M-<Return>: org
+
+

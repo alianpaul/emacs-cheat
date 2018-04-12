@@ -1,0 +1,172 @@
+* Screen
+        C-v	Move forward one screenful
+        M-v	Move backward one screenful
+        C-l	Clear screen and redisplay all the text,moving the text around the cursor to
+                the center of the screen.
+
+* Cursor
+
+			  Previous line, C-p
+				  :
+				  :
+   Backward, C-b .... Current cursor position .... Forward, C-f
+				  :
+				  :
+			    Next line, C-n
+
+Parallel between Meta and Ctrl character. Meta are used for operations related to the units
+defined by the language(word, sentence). Ctrl operates on basic units.
+
+        C-f	Move forward a character
+	C-b	Move backward a character
+
+	M-f	Move forward a word
+	M-b	Move backward a word
+
+	C-n	Move to next line
+	C-p	Move to previous line
+
+	C-a	Move to beginning of line
+	C-e	Move to end of line
+
+	M-a	Move back to beginning of sentence
+	M-e	Move forward to end of sentence
+
+	M-<
+	M->
+
+Commands use the numeric argument as a repeat count.
+	C-u numeric_argument operation
+
+* Disabled commands
+* Windows
+	C-x 1   Kill other windows.
+C-x commands have to do with windows, files, buffers.
+
+* Inserting and Deleting
+<Return> Electric
+Repeating a text character by C-u num insserts it serval times.
+
+	<DEL>        Delete the character just before the cursor
+	C-d   	     Delete the next character after the cursor
+
+	M-<DEL>      Kill the word immediately before the cursor
+	M-d	     Kill the next word after the cursor
+
+	C-k	     Kill from the cursor position to end of line
+	M-k	     Kill to the end of the current sentence
+M- C- parallel also exists.
+DEL/KILL  | CURSOR MOVE
+D   <DEL> | C-b
+D     C-d | C-f
+K  M-<DEL>| M-b
+K     M-d | M-f
+K     C-k | C-e     
+K     M-k | M-e
+
+Killed text can be yanked back, Deleted text can be undo back.
+Kill/Delete does not depends on the command we invoked, it depends on the specific
+contents we operate on.
+If the command remove a lot of text, it's a Kill.
+If the command remove a single character/whitespaces, it's a Delete.
+
+When we invoke C-k command on a line, the contents of that line without whitespaces is
+killed. The <Return> character is left.  A second C-k kill line itself.
+
+If you do several C-k in a row(same time at the same place, all of the killed text is saved together.
+
+C-y/M-y
+C-y yank the most recent killed text. M-y yank the previous killed text. Do M-y multiple times, it will bring us back to the most recent killed
+* Undo
+C-/
+* Files
+Find a file: See the contents of the file within emacs.
+Save a file: Copy the text within emacs into the file.
+* Buffers
+Emacs stores each file's text inside an object called a *buffer*.  Find a file makes a
+new buffer for the file's text.
+
+C-x C-b    List Buffers (In a *Buffer List*)
+C-x b      Switch buffer by specifying the buffer name
+
+Some buffers do not correspond to files: *Buffer List*, *Message*
+* Extending the command set
+We want to put Emacs commands on the Control and Meta characters.
+Emacs gets around this with the X command.
+
+C-x    Character eXtend.
+M-x    Named command eXtend.
+
+C-x C-c    terminate Emacs session
+C-x C-z    suspend Emacs and return to the shell, resume emacs with the "fg" command or 
+           "%emacs"
+
+M-x command    
+
+M-x replace-s    replace after the initial position of the cursor
+
+* Auto save
+M-x recover-file    Recover the auto saved file
+
+* Echo area
+* Mode line
+Editing Mode, one and only one major mode is active.
+
+Different modes may make commands behave differently.
+
+Each major mode's name is also a name of an eXtended command, we can
+use this name to switch the major mode of a buffer.  
+
+M-x fundamental-mode
+
+C-h m    View documentation of current mode
+
+Minor modes: minor modifications of major modes.
+
+*auto-fill-mode*: break the line automatically.
+C-x f    Set margin
+M-q      re-fill the paragraph
+
+* Searching
+
+C-s    forward search
+C-r    backward search
+<Return> terminates a search.
+
+* Multiple windows
+C-M-v    Scroll the text in other window
+C-x 1    Just keep 1 window
+
+* Multiple frames
+A frame is a collection of windows with its menus, scroll bars, echo
+area, etc.  On graphical displays, Emacs frame = *system window*, so
+multiple frames can be shown at the same time.  But on text terminal,
+only one frame can be shown at a time.
+
+M-x make-frame
+
+M-x delete-frame
+
+* Recursive editing levels
+[ESC][ESC][ESC]    all-purpose get out command
+                   - eliminating extra windows
+		   - getting out of the minibuffer
+		   - getting out of the recursive editing level
+/recursive editing level?/
+[(Major mode)]
+
+* Getting more help
+C-h c    brief description of the character command. tells the name of the
+         function(command)
+
+C-h k    documentation of the character command and its corresponding
+         function(command)
+
+C-h f    type in the name of the function
+
+C-h v    type in the name of the variable
+
+C-h a    type in the keyword of the command, these commands can use M-x
+         to execute.
+
+C-h i    read included manuals. manuals for all packages installed
