@@ -60,7 +60,7 @@ void.
 
 Symbol tells computer where to find the instructions.
 
-** Names & Definitions
+0** Names & Definitions
 A symbol itself is not the set of instructions the computer to carry
 out. It is used as a way to locating the definition or set of
 instructions.
@@ -359,4 +359,44 @@ region: part of the buffer between point and mark.
 C-u C-<SPC>: pop the previous mark
 
 ** 'append-to-buffer'
+#+BEGIN_SRC emacs-lisp
+  (defun append-to-buffer (buffer start end)
+    "Append to specified buffer the text of the region.
+       It is inserted into that buffer before its point.
 
+       When calling from a program, give three arguments:
+       BUFFER (or buffer name), START and END.
+       START and END specify the portion of the current buffer to be copied."
+    (interactive
+     (list (read-buffer "Append to buffer: " (other-buffer
+                                              (current-buffer) t))
+           (region-beginning) 
+           (region-end)))
+    (let ((oldbuf (current-buffer)))
+      (save-excursion
+        (let* ((append-to (get-buffer-create buffer))
+               (windows (get-buffer-window-list append-to t t))
+               point)
+          (set-buffer append-to)
+          (setq point (point))
+          (barf-if-buffer-read-only)
+          (insert-buffer-substring oldbuf start end)
+          (dolist (window windows)
+            (when (= (window-point window) point)
+              (set-window-point window (point))))))))
+#+END_SRC
+
+Everything that is enclosed in a multi-line spread is indented more to
+the right than the first symbol.
+
+let*: Set each variable in its varlist in sequence. In this way, we
+can use the varibles set earlier to set other variables in the
+varlist.
+
+current-buffer: the buffer we currently give command to.
+
+(insert-buffer-substring oldbuf start end)
+
+(save-excursion): 
+
+** Excercises
