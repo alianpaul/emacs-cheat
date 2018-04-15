@@ -60,7 +60,7 @@ void.
 
 Symbol tells computer where to find the instructions.
 
-0** Names & Definitions
+** Names & Definitions
 A symbol itself is not the set of instructions the computer to carry
 out. It is used as a way to locating the definition or set of
 instructions.
@@ -321,7 +321,7 @@ Also keeps track of the current buffer.
 
 'string='
 'string-equal'
-* A few buffer related functions
+* A Few Buffer Related Functions
 describe-function, tell the location of the function
 
 xref-find-definitions: see a function in its original source file.
@@ -400,3 +400,38 @@ current-buffer: the buffer we currently give command to.
 (save-excursion): 
 
 ** Excercises
+
+- simplified-end-of-buffer
+#+BEGIN_SRC emacs-lisp
+  (defun simplified-end-of-buffer ()
+    "Move the point to the end of the buffer"
+    (interactive)
+    (push-mark (point) nil t)
+    (goto-char (point-max)))
+
+  (simplified-end-of-buffer)
+#+END_SRC
+
+- my-buffer-predicate
+#+BEGIN_SRC emacs-lisp
+  (defun my-buffer-predicate (buffer)
+    "Test BUFFER if exist"
+    (interactive)
+    (if (get-buffer buffer)
+        (message  "%s buffer exists" buffer)
+      (message "%s does not exist" buffer)))
+#+END_SRC
+
+- xref-find-definitions
+*xref-find-definitions dont work, some thing wrong with tags*
+* A Few More Complex Functions
+** 'copy-to-buffer'
+(save-excursion
+  ...
+  (set-buffer ...)
+  ...)
+
+(with-current-buffer BUFFER
+  BODY)
+Evaluates its body with that buffer temporarily current
+
