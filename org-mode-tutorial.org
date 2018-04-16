@@ -60,8 +60,31 @@ C-c '    Enter and leave the editing buffer.
   def faggot:
       print "Hello, Faggot"
 #+END_SRC
+
 ** Include files
+
 ** Embedded LaTeX
+*Org mode支持latex所需环境*
+1. 安装MacTex的精简版BasicTex，安装成功后，还需emacs的环境变量中，添加
+   BasicTex的执行路径
+   #+BEGIN_SRC emacs-lisp
+     ;; Making emacs find latex (so that C-c C-x C-l works on orgmode)
+     (setenv "PATH" (concat (getenv "PATH") ":/Library/TeX/texbin/"))
+     (add-to-list 'exec-path "/Library/TeX/texbin/")
+   #+END_SRC
+   我们使用的是从[[http://www.tug.org/mactex/morepackages.html][ MacTex ]]下载相关包并进行安装的。默认安装路径为
+   /usr/local/texlive. 安装后，/Library/Tex/texbin/也还有相关命令。
+2. BasicTex完整，只有基本功能，为了让emacs的orgmode完全支持latex相关的
+   各功能，我们还需安装其additional package，所需的四个texlive package
+   分别为wrapfig marvosym wasy wasysym。我们使用tlmgr intall来安装。
+3. LatexPreview功能还需要安装dvipng或imagemagick，我们使用imagemagick。
+   通过brew安装此功能，并在emacs配置文件中做相应配置。
+   #+BEGIN_SRC emacs-lisp
+     ;; Use brew installed packages
+     (setenv "PATH" (concat (getenv "PATH") ":/usr/local/bin/"))
+     (add-to-list 'exec-path "/usr/local/bin/")
+   #+END_SRC
+
 Angles are written as Greek letters \alpha, \beta and \gamma.  The mass if
 the sun is M_sun = 1.989 x 10^30 kg.  The radius of the sun is R_{sun} =
 6.96 x 10^8 m.  If $a^2=b$ and $b=2$, then the solution must be either
@@ -70,7 +93,6 @@ $a=+\sqrt{2}$ or $a=-\sqrt{2}$.
 \begin{equation}
 x=\sqrt{b}
 \end{equation}
-
 
 * Exporting
 ** Export options
